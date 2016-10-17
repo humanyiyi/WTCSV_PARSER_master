@@ -11,12 +11,8 @@ public class ParserProperties {
 
     @Value("${com.udbac.csvparser.csvpath}")
     private String csvPath;
-
     public String getCsvPath() {
         return csvPath;
     }
 
-    public void setCsvPath(String csvPath) {
-        this.csvPath = csvPath;
-    }
 }

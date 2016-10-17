@@ -9,7 +9,6 @@ import java.util.List;
  * Created by 43890 on 2016/10/11.
  */
 
-public interface BaseDailyService {
-
-    List<TbAmpBackendBaseDaily> getDailyCsv();
+public interface BackendBaseService {
+    List<TbAmpBackendBaseDaily> getBaseDaily();
 }

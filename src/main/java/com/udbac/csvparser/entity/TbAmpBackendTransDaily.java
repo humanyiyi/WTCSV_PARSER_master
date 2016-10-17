@@ -1,7 +1,9 @@
 package com.udbac.csvparser.entity;
 
-public class TbAmpBackendTransDaily {
+import org.springframework.stereotype.Component;
 
+@Component
+public class TbAmpBackendTransDaily {
     private String createDate;
     private String mic;
     private String behaviorVV;

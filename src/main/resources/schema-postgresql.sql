@@ -1,14 +1,50 @@
-CREATE TABLE IF NOT EXIST
- TbAmpBackendBaseDailyTable(createDate TIMESTAMP,mcid VARCHAR(24),visits INT,visitor INT,pv INT,click INT,bounceVisit INT,viewtime NUMERIC(8,2));
+CREATE TABLE IF NOT EXISTS tb_amp_backend_base_daily_table(
+createDate VARCHAR(20) NOT NULL,
+mcid VARCHAR(30) NOT NULL,
+visits INTEGER DEFAULT 0,
+visitor INTEGER DEFAULT 0,
+pv INTEGER DEFAULT 0,
+click INTEGER DEFAULT 0,
+bounceVisit INTEGER DEFAULT 0,
+viewtime NUMERIC(8,2) DEFAULT 0,
+PRIMARY KEY(createDate,mcid));
 
-CREATE TABLE IF NOT EXIST
- TbAmpBackendTransDailyTable(createDate TIMESTAMP,mcid VARCHAR(24),begavior INT,trans INT,phonebuy INT,setmeal INT,parts INT);
 
-CREATE TABLE IF NOT EXIST
- TbAmpFlowMarketingDailyTable(createDate TIMESTAMP,mcid VARCHAR(24),url VARCHAR(200),visits INT,pv INT);
+CREATE TABLE IF NOT EXISTS tb_amp_backend_trans_daily_table(
+createDate VARCHAR(20) NOT NULL,
+mcid VARCHAR(30) NOT NULL,
+begavior INTEGER DEFAULT 0,
+trans INTEGER DEFAULT 0,
+phonebuy INTEGER DEFAULT 0,
+setmeal INTEGER DEFAULT 0,
+parts INTEGER DEFAULT 0,
+PRIMARY KEY(createDate,mcid));
 
-CREATE TABLE IF NOT EXIST
- TbAmpFlowNatureDailyTable(createDate TIMESTAMP,classfy VARCHAR(20),referer VARCHAR(200),entrypage VARCHAR(200),visits INT,pv INT);
 
-CREATE TABLE IF NOT EXIST
- TbAmpFlowTotalDailyTable(createDate TIMESTAMP,classfy VARCHAR(20),url VARCHAR(200),visits INT,pv INT,viewtime NUMERIC(8,2));
+CREATE TABLE IF NOT EXISTS tb_amp_flow_marketing_daily_table(
+createDate VARCHAR(20) NOT NULL,
+mcid VARCHAR(30) NOT NULL,
+url TEXT NOT NULL,
+visits INTEGER DEFAULT 0,
+pv INTEGER DEFAULT 0,
+PRIMARY KEY(createDate,mcid,url));
+
+
+CREATE TABLE IF NOT EXISTS tb_amp_flow_nature_daily_table(
+createDate VARCHAR(20) NOT NULL,
+classfy VARCHAR(20) NOT NULL,
+referer TEXT NOT NULL,
+entrypage TEXT NOT NULL,
+visits INTEGER DEFAULT 0,
+pv INTEGER DEFAULT 0,
+PRIMARY KEY(createDate,classfy,referer,entrypage));
+
+
+CREATE TABLE IF NOT EXISTS tb_amp_flow_total_daily_table(
+createDate VARCHAR(20) NOT NULL,
+classfy VARCHAR(20) NOT NULL,
+url TEXT NOT NULL,
+visits INTEGER DEFAULT 0,
+pv INTEGER DEFAULT 0,
+viewtime NUMERIC(8,2) DEFAULT 0,
+PRIMARY KEY(createDate,classfy,url));

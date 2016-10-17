@@ -1,5 +1,8 @@
 package com.udbac.csvparser.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class TbAmpFlowMarketingDaily {
 	
 	private String createDate;
