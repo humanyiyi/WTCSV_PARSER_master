@@ -49,7 +49,7 @@ public class TbAmpFlowTotalDaily {
 	}
 	
 	public String toString(){
-		return createDate +
+		return "'"+createDate+"'" +
 				", '" + classfy + '\'' +
                 ", '" + url + '\'' +
                 ", " + visits +

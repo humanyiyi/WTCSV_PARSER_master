@@ -5,6 +5,7 @@ import com.udbac.csvparser.service.BackendBaseService;
 
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by 43890 on 2016/10/11.
  */
-@Service
+@Component
 public class BackendBaseServiceImpl implements BackendBaseService {
 
     @Autowired

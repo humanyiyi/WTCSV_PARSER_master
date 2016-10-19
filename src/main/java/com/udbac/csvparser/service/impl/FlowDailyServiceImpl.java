@@ -6,6 +6,7 @@ import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
 import com.udbac.csvparser.service.FlowDailyService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by 43890 on 2016/10/16.
  */
-@Service
+@Component
 public class FlowDailyServiceImpl implements FlowDailyService {
 
     @Autowired
@@ -76,7 +77,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
                 tbAmpFlowNatureDaily.setClassfy("PORTAL_PC");
                 tbAmpFlowNatureDaily.setUrl(row1[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row1[4]);
+                tbAmpFlowNatureDaily.setEntryPage(row1[5]);
                 tbAmpFlowNatureDaily.setVisits(row1[7]);
                 tbAmpFlowNatureDaily.setPv(row1[9]);
                 tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
@@ -94,7 +95,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
                 tbAmpFlowNatureDaily.setClassfy("PORTAL_MOBILE");
                 tbAmpFlowNatureDaily.setUrl(row4[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row4[4]);
+                tbAmpFlowNatureDaily.setEntryPage(row4[5]);
                 tbAmpFlowNatureDaily.setVisits(row4[7]);
                 tbAmpFlowNatureDaily.setPv(row4[9]);
                 tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
@@ -112,7 +113,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
                 tbAmpFlowNatureDaily.setClassfy("SHOP");
                 tbAmpFlowNatureDaily.setUrl(row2[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row2[4]);
+                tbAmpFlowNatureDaily.setEntryPage(row2[5]);
                 tbAmpFlowNatureDaily.setVisits(row2[7]);
                 tbAmpFlowNatureDaily.setPv(row2[9]);
                 tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
@@ -130,7 +131,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
                 tbAmpFlowNatureDaily.setClassfy("TOUCH");
                 tbAmpFlowNatureDaily.setUrl(row3[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row3[4]);
+                tbAmpFlowNatureDaily.setEntryPage(row3[5]);
                 tbAmpFlowNatureDaily.setVisits(row3[7]);
                 tbAmpFlowNatureDaily.setPv(row3[9]);
 

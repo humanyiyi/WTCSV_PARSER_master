@@ -23,32 +23,35 @@ public class CsvParseUtil {
     @Autowired
     TimeUtil timeUtil;
 
-    public  List<String[]> parseCSV2Rows(String filename) {
+    public  List<String[]> parseCSV2Rows(String filename){
         return parseCSV2Rows(filename,"GB2312");
     }
 
-    public  List<String[]> parseCSV2Rows(String filename,String encoding) {
+    public  List<String[]> parseCSV2Rows(String filename,String encoding){
         List<String[]> allRows = null;
-        CsvParserSettings visitsSetting = new CsvParserSettings();
-        visitsSetting.getFormat().setLineSeparator("\n");
-        CsvParser parser = new CsvParser(visitsSetting);
-        String filePath = parserProperties.getCsvPath() + "\\" + filename;
-        File csvfile = new File(filePath);
-        if (!csvfile.exists()) {
-            logger.error("找不到文件，文件名："+filename);
-            return null;
-        } else {
-            allRows = parser.parseAll(csvfile, encoding);
-            if (allRows.size() < 1000) {
-                logger.error("文件行数太少，文件名："+filename);
+        try {
+            CsvParserSettings visitsSetting = new CsvParserSettings();
+            visitsSetting.getFormat().setLineSeparator("\n");
+            CsvParser parser = new CsvParser(visitsSetting);
+            String filePath = parserProperties.getCsvPath() + "\\" + filename;
+            File csvfile = new File(filePath);
+            if (!csvfile.exists()) {
+                logger.error("找不到文件，文件名："+filename);
                 return null;
-//            } else if (!getTime(allRows).equals(timeUtil.getYesterday())) {
-//                logger.error("文件日期不是昨天日期，文件名" + filename);
-//                return null;
             } else {
-                return allRows;
+                allRows = parser.parseAll(csvfile, encoding);
+                if (allRows.size() < 1000) {
+                    logger.error("文件行数太少，文件名："+filename);
+                    return null;
+//                } else if (!getTime(allRows).equals(timeUtil.getYesterday())) {
+//                    logger.error("文件日期不是昨天日期，文件名" + filename);
+//                    return null;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return allRows;
     }
 
     public String getTime(List<String[]> ampRows) {

@@ -43,7 +43,7 @@ public class TbAmpFlowMarketingDaily {
 	
 	public String toString(){
 		
-		return createDate +
+		return "'"+createDate+"'" +
                 ", '" + mic + '\'' +
                 ", '" + url + '\'' +
                 ", " + visits +

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -24,17 +23,21 @@ public class BackendBaseRepoImpl implements BackendBaseRepo {
     private BackendBaseService backendBaseService;
     @Override
     public void insertBackendBase() {
-        String tableName = "tb_amp_backend_base_daily_table";
-        try {
+            String tableName = "tb_amp_backend_base_daily_table";
             List<TbAmpBackendBaseDaily> list = backendBaseService.getBaseDaily();
-            for (TbAmpBackendBaseDaily baseTable : list) {
-                String sql = "INSERT INTO " + tableName + " VALUES(" + baseTable.toString() + ")";
-                jdbcTemplate.execute(sql);
+            if(list.isEmpty()){
+                logger.error("***插入表"+tableName+"失败***，获取数据为空");
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("插入表"+tableName+"失败"+e);
-        }
-        logger.info("插入数据到tb_amp_backend_base _daily完成");
+            for (TbAmpBackendBaseDaily tbAmpBackendBaseDaily : list) {
+                String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendBaseDaily.toString() + ")";
+                try {
+                    jdbcTemplate.execute(sql);
+                } catch (Exception e) {
+                    logger.error("*表"+tableName+"插入语句异常*"+e);
+                    e.printStackTrace();
+                }
+            }
+        logger.info("插入数据到" + tableName + "完成");
     }
 }

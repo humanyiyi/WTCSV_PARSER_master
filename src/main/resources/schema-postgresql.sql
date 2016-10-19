@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS tb_amp_backend_base_daily_table(
 createDate VARCHAR(20) NOT NULL,
-mcid VARCHAR(30) NOT NULL,
+mcid VARCHAR(24) NOT NULL,
 visits INTEGER DEFAULT 0,
 visitor INTEGER DEFAULT 0,
 pv INTEGER DEFAULT 0,
@@ -12,7 +12,7 @@ PRIMARY KEY(createDate,mcid));
 
 CREATE TABLE IF NOT EXISTS tb_amp_backend_trans_daily_table(
 createDate VARCHAR(20) NOT NULL,
-mcid VARCHAR(30) NOT NULL,
+mcid VARCHAR(24) NOT NULL,
 begavior INTEGER DEFAULT 0,
 trans INTEGER DEFAULT 0,
 phonebuy INTEGER DEFAULT 0,
@@ -23,7 +23,7 @@ PRIMARY KEY(createDate,mcid));
 
 CREATE TABLE IF NOT EXISTS tb_amp_flow_marketing_daily_table(
 createDate VARCHAR(20) NOT NULL,
-mcid VARCHAR(30) NOT NULL,
+mcid VARCHAR(24) NOT NULL,
 url TEXT NOT NULL,
 visits INTEGER DEFAULT 0,
 pv INTEGER DEFAULT 0,

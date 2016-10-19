@@ -1,6 +1,7 @@
 package com.udbac.csvparser.entity;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class TbAmpFlowNatureDaily {
@@ -42,6 +43,12 @@ public class TbAmpFlowNatureDaily {
 		return entryPage;
 	}
 	public void setEntryPage(String entryPage) {
+		if (!StringUtils.isEmpty(entryPage)) {
+			if (entryPage.contains("'")) {
+				this.entryPage = entryPage.replace("'", "''");
+				return;
+			}
+		}
 		this.entryPage = entryPage;
 	}
 	
@@ -49,20 +56,17 @@ public class TbAmpFlowNatureDaily {
 		return url;
 	}
 	public void setUrl(String url) {
-		this.url = url;
+		if (!StringUtils.isEmpty(url)) {
+			if (url.contains("'")) {
+				this.url = url.replace("'", "''");
+				return;
+			}
+		}
+			this.url = url;
 	}
 	
 	public String toString(){
-//		StringBuffer sb = new StringBuffer();
-//		
-//		sb.append(createDate).append(",\'")
-//		.append(classfy).append("\',\'")
-//		.append(url).append("\',\'")
-//		.append(entryPage).append("\',")
-//		.append(visits).append(',')
-//		.append(pv);
-//		return sb.toString();
-		return  createDate +
+		return  "'"+createDate+"'" +
 				", '" + classfy + '\'' +
                 ", '" + url + '\'' +
                 ", '" + entryPage + '\'' +
