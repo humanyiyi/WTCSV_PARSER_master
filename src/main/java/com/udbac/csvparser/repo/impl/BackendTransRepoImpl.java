@@ -25,22 +25,20 @@ public class BackendTransRepoImpl implements BackendTransRepo {
 
     @Override
     public void insertBackendTrans() {
-            String tableName = "tb_amp_backend_trans_daily_table";
-            List<TbAmpBackendTransDaily> list = backendTransService.getBackendTrans();
-            if(list.isEmpty()){
-                logger.error("***插入表"+tableName+"失败***，获取数据为空");
-                return;
+        String tableName = "tb_amp_backend_trans_daily_table";
+        List<TbAmpBackendTransDaily> list = backendTransService.getBackendTrans();
+        if (list.isEmpty()) {
+            logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
+            return;
+        }
+        for (TbAmpBackendTransDaily tbAmpBackendTransDaily : list) {
+            if (tbAmpBackendTransDaily.getMic().length() > 24) {
+                continue;
             }
-            for (TbAmpBackendTransDaily tbAmpBackendTransDaily : list) {
-                String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendTransDaily.toString() + ")";
-                try {
-                    jdbcTemplate.execute(sql);
-                } catch (Exception e) {
-                    logger.error("*表"+tableName+"插入语句异常*"+e);
-                    e.printStackTrace();
-                }
-            }
-        logger.info("插入数据到表" + tableName + "完成");
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendTransDaily.toString() + ") on conflict do nothing";
+            jdbcTemplate.execute(sql);
+        }
+        logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
     }
 }
 

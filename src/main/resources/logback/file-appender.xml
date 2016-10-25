@@ -13,13 +13,13 @@ initialization performed by Boot
 			<charset>utf8</charset>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
+			<level>INFO</level>
+			<!--<onMatch>ACCEPT</onMatch>-->
+			<!--<onMismatch>DENY</onMismatch>-->
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_FILE}/%d{yyyy-MM-dd}/error-log.log</fileNamePattern>
-			<maxHistory>6</maxHistory>
+			<fileNamePattern>${LOG_FILE}/%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 	</appender>
 </included>

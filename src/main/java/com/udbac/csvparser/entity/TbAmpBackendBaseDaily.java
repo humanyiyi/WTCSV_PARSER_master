@@ -98,13 +98,13 @@ public class TbAmpBackendBaseDaily {
     @Override
     public String toString() {
         return
-                "'"+createDate+"'" +
-                ", '" + mic + '\'' +
-                "," + visits + 
-                "," + visitor + 
-                ", " + pv + 
-                "," + click  +
-                ", " + bounceVisit + 
-                ", " + viewTime ;
+                "'" + createDate + "'" +
+                        ", '" + mic + '\'' +
+                        "," + visits +
+                        "," + visitor +
+                        ", " + pv +
+                        "," + click +
+                        ", " + bounceVisit +
+                        ", " + viewTime;
     }
 }

@@ -1,6 +1,7 @@
 package com.udbac.csvparser.entity;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class TbAmpFlowTotalDaily {
@@ -27,6 +28,12 @@ public class TbAmpFlowTotalDaily {
 		return url;
 	}
 	public void setUrl(String url) {
+		if (!StringUtils.isEmpty(url)) {
+			if (url.contains("'")) {
+				this.url = url.replace("'", "''");
+				return;
+			}
+		}
 		this.url = url;
 	}
 	public String getVisits() {

@@ -23,33 +23,29 @@ public class CsvParseUtil {
     @Autowired
     TimeUtil timeUtil;
 
-    public  List<String[]> parseCSV2Rows(String filename){
-        return parseCSV2Rows(filename,"GB2312");
+    public List<String[]> parseCSV2Rows(String filename) {
+        return parseCSV2Rows(filename, "GB2312");
     }
 
-    public  List<String[]> parseCSV2Rows(String filename,String encoding){
+    public List<String[]> parseCSV2Rows(String filename, String encoding) {
         List<String[]> allRows = null;
-        try {
-            CsvParserSettings visitsSetting = new CsvParserSettings();
-            visitsSetting.getFormat().setLineSeparator("\n");
-            CsvParser parser = new CsvParser(visitsSetting);
-            String filePath = parserProperties.getCsvPath() + "\\" + filename;
-            File csvfile = new File(filePath);
-            if (!csvfile.exists()) {
-                logger.error("找不到文件，文件名："+filename);
+        CsvParserSettings visitsSetting = new CsvParserSettings();
+        visitsSetting.getFormat().setLineSeparator("\n");
+        CsvParser parser = new CsvParser(visitsSetting);
+        String filePath = parserProperties.getCsvPath() + "\\" + filename;
+        File csvfile = new File(filePath);
+        if (!csvfile.exists()) {
+            logger.error("***CAN NOT FIND FILE：" + filename + "  PLEASE CHECK THE CSV FILE IS EXIST***");
+            return null;
+        } else {
+            allRows = parser.parseAll(csvfile, encoding);
+            if (allRows.size() < 1000) {
+                logger.error("***CSV FILE ROWS SIZE < 10000, FILENAME：" + filename + "  PLEASE CHECK FILE ROWS SIZE***");
                 return null;
-            } else {
-                allRows = parser.parseAll(csvfile, encoding);
-                if (allRows.size() < 1000) {
-                    logger.error("文件行数太少，文件名："+filename);
-                    return null;
 //                } else if (!getTime(allRows).equals(timeUtil.getYesterday())) {
-//                    logger.error("文件日期不是昨天日期，文件名" + filename);
+//                    logger.error("***CSV FILE DATE IS NOT YESTERDAY" + filename + "PLEASE CHECK FILE DATE***");
 //                    return null;
-                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return allRows;
     }

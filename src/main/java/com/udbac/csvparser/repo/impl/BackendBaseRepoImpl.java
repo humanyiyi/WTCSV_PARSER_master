@@ -7,37 +7,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by 43890 on 2016/10/16.
  */
-@Component
+@Repository
 public class BackendBaseRepoImpl implements BackendBaseRepo {
     private static final Logger logger = LoggerFactory.getLogger(BackendBaseRepoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private BackendBaseService backendBaseService;
+
     @Override
     public void insertBackendBase() {
-            String tableName = "tb_amp_backend_base_daily_table";
-            List<TbAmpBackendBaseDaily> list = backendBaseService.getBaseDaily();
-            if(list.isEmpty()){
-                logger.error("***插入表"+tableName+"失败***，获取数据为空");
-                return;
+        String tableName = "tb_amp_backend_base_daily_table";
+        List<TbAmpBackendBaseDaily> list = backendBaseService.getBaseDaily();
+        if (list.isEmpty()) {
+            logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
+            return;
+        }
+
+        for (TbAmpBackendBaseDaily tbAmpBackendBaseDaily : list) {
+            if (tbAmpBackendBaseDaily.getMic().length() > 24) {
+                continue;
             }
-            for (TbAmpBackendBaseDaily tbAmpBackendBaseDaily : list) {
-                String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendBaseDaily.toString() + ")";
-                try {
-                    jdbcTemplate.execute(sql);
-                } catch (Exception e) {
-                    logger.error("*表"+tableName+"插入语句异常*"+e);
-                    e.printStackTrace();
-                }
-            }
-        logger.info("插入数据到" + tableName + "完成");
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendBaseDaily.toString() + ") on conflict do nothing";
+            jdbcTemplate.update(sql);
+        }
+        logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
     }
 }

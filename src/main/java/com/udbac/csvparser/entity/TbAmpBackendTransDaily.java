@@ -69,7 +69,7 @@ public class TbAmpBackendTransDaily {
     }
 
     public String toString() {
-        return "'"+createDate+"'" +
+        return "'" + createDate + "'" +
                 ", '" + mic + '\'' +
                 ", " + behaviorVV +
                 ", " + transactionVV +
