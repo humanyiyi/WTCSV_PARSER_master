@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface FlowDailyService {
 
-    List<TbAmpFlowMarketingDaily> getFlowMarketing();
+    List<TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception;
 
-    List<TbAmpFlowNatureDaily> getFlowNature();
+    List<TbAmpFlowNatureDaily> getFlowNature() throws Exception;
 
-    List<TbAmpFlowTotalDaily> getFlowTotal();
+    List<TbAmpFlowTotalDaily> getFlowTotal() throws Exception;
 }

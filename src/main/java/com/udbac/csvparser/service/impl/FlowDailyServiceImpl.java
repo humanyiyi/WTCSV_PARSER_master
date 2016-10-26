@@ -6,7 +6,7 @@ import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
 import com.udbac.csvparser.service.FlowDailyService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by 43890 on 2016/10/16.
  */
-@Component
+@Service
 public class FlowDailyServiceImpl implements FlowDailyService {
 
     @Autowired
@@ -28,7 +28,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
     TbAmpFlowTotalDaily tbAmpFlowTotalDaily;
 
     @Override
-    public List<TbAmpFlowMarketingDaily> getFlowMarketing() {
+    public List<TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception{
         List<String[]> ampFlowMarketRows = csvParseUtil.parseCSV2Rows("营销流量allhits_WT.es-new.csv");
         List<TbAmpFlowMarketingDaily> tbAmpFlowMarketingDailyList = new ArrayList<TbAmpFlowMarketingDaily>();
 
@@ -53,7 +53,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
     }
 
     @Override
-    public List<TbAmpFlowNatureDaily> getFlowNature() {
+    public List<TbAmpFlowNatureDaily> getFlowNature() throws Exception{
         List<String[]> mcidPortalRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)门户pc.csv");
         List<String[]> mcidPortalTouchRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)门户mobile.csv");
         List<String[]> mcidShopRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)shop.csv");
@@ -141,7 +141,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
     }
 
     @Override
-    public List<TbAmpFlowTotalDaily> getFlowTotal() {
+    public List<TbAmpFlowTotalDaily> getFlowTotal() throws Exception{
         List<String[]> portalRows = csvParseUtil.parseCSV2Rows("门户_页.csv");
         List<String[]> shopRows = csvParseUtil.parseCSV2Rows("shop_页.csv");
         List<String[]> touchRows = csvParseUtil.parseCSV2Rows("touch_页.csv");

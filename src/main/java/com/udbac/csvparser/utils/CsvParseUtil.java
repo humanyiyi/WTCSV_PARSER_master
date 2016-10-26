@@ -23,11 +23,11 @@ public class CsvParseUtil {
     @Autowired
     TimeUtil timeUtil;
 
-    public List<String[]> parseCSV2Rows(String filename) {
+    public List<String[]> parseCSV2Rows(String filename) throws Exception{
         return parseCSV2Rows(filename, "GB2312");
     }
 
-    public List<String[]> parseCSV2Rows(String filename, String encoding) {
+    public List<String[]> parseCSV2Rows(String filename, String encoding) throws Exception{
         List<String[]> allRows = null;
         CsvParserSettings visitsSetting = new CsvParserSettings();
         visitsSetting.getFormat().setLineSeparator("\n");

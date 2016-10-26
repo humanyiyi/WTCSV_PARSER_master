@@ -10,5 +10,5 @@ import java.util.List;
  */
 
 public interface BackendBaseService {
-    List<TbAmpBackendBaseDaily> getBaseDaily();
+    List<TbAmpBackendBaseDaily> getBaseDaily() throws Exception;
 }

@@ -4,7 +4,7 @@ import com.udbac.csvparser.entity.TbAmpBackendBaseDaily;
 import com.udbac.csvparser.service.BackendBaseService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by 43890 on 2016/10/11.
  */
-@Component
+@Service
 public class BackendBaseServiceImpl implements BackendBaseService {
 
     @Autowired
@@ -21,7 +21,7 @@ public class BackendBaseServiceImpl implements BackendBaseService {
     TbAmpBackendBaseDaily baseTable;
 
     @Override
-    public List<TbAmpBackendBaseDaily> getBaseDaily() {
+    public List<TbAmpBackendBaseDaily> getBaseDaily() throws Exception{
         List<TbAmpBackendBaseDaily> baseTableList;
         List<String[]> visitRows = csvParseUtil.parseCSV2Rows("营销活动(访次).csv");
         List<String[]> avisitRows = csvParseUtil.parseCSV2Rows("营销活动(访客).csv");

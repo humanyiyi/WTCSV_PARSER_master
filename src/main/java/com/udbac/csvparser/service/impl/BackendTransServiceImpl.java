@@ -4,7 +4,7 @@ import com.udbac.csvparser.entity.TbAmpBackendTransDaily;
 import com.udbac.csvparser.service.BackendTransService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by 43890 on 2016/10/16.
  */
-@Component
+@Service
 public class BackendTransServiceImpl implements BackendTransService {
     @Autowired
     CsvParseUtil csvParseUtil;
@@ -20,7 +20,7 @@ public class BackendTransServiceImpl implements BackendTransService {
     TbAmpBackendTransDaily tbAmpBackendTransDaily;
 
     @Override
-    public List<TbAmpBackendTransDaily> getBackendTrans() {
+    public List<TbAmpBackendTransDaily> getBackendTrans() throws Exception{
         List<TbAmpBackendTransDaily> tbAmpBackendTransDailyList=new ArrayList<TbAmpBackendTransDaily>();;
         List<String[]> pageClickRows = csvParseUtil.parseCSV2Rows("营销活动(落地页元素点击)去掉nv.csv","UTF-8");
         List<String[]> serviceRows = csvParseUtil.parseCSV2Rows("营销活动_办业务转化.csv");

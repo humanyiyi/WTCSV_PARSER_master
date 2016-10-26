@@ -8,5 +8,5 @@ import java.util.List;
  * Created by 43890 on 2016/10/16.
  */
 public interface BackendTransService {
-    List<TbAmpBackendTransDaily> getBackendTrans();
+    List<TbAmpBackendTransDaily> getBackendTrans() throws Exception;
 }

@@ -23,7 +23,7 @@ public class BackendBaseRepoImpl implements BackendBaseRepo {
     private BackendBaseService backendBaseService;
 
     @Override
-    public void insertBackendBase() {
+    public void insertBackendBase() throws Exception{
         String tableName = "tb_amp_backend_base_daily_table";
         List<TbAmpBackendBaseDaily> list = backendBaseService.getBaseDaily();
         if (list.isEmpty()) {

@@ -3,6 +3,8 @@ package com.udbac.csvparser;
 import com.udbac.csvparser.repo.BackendBaseRepo;
 import com.udbac.csvparser.repo.BackendTransRepo;
 import com.udbac.csvparser.repo.FlowDailyRepo;
+import com.udbac.csvparser.service.SendMailService;
+import com.udbac.csvparser.utils.ExitException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -19,22 +21,30 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
     public static void main(String[] args) {
         System.exit(SpringApplication.exit(SpringApplication.run(Application.class, args)));
     }
+
     @Override
     public void run(String... strings) throws Exception {
         application.insertAll();
     }
+
     @Override
     public int getExitCode() {
         return 0;
     }
 
     @Transactional
-    public void insertAll() {
-        backendBaseRepo.insertBackendBase();
-        backendTransRepo.insertBackendTrans();
-        flowDailyRepo.insertFlowMarket();
-        flowDailyRepo.insertFlowNature();
-        flowDailyRepo.insertFlowTotalDaily();
+    public void insertAll(){
+        try {
+            backendBaseRepo.insertBackendBase();
+            backendTransRepo.insertBackendTrans();
+            flowDailyRepo.insertFlowMarket();
+            flowDailyRepo.insertFlowNature();
+            flowDailyRepo.insertFlowTotalDaily();
+        } catch (Exception e) {
+            sendMailService.sendFailedEmail();
+            throw new ExitException();
+        }
+
     }
 
     @Autowired
@@ -45,4 +55,6 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
     private BackendTransRepo backendTransRepo;
     @Autowired
     private FlowDailyRepo flowDailyRepo;
+    @Autowired
+    private SendMailService sendMailService;
 }

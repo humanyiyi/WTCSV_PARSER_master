@@ -24,7 +24,7 @@ public class BackendTransRepoImpl implements BackendTransRepo {
     private BackendTransService backendTransService;
 
     @Override
-    public void insertBackendTrans() {
+    public void insertBackendTrans() throws Exception{
         String tableName = "tb_amp_backend_trans_daily_table";
         List<TbAmpBackendTransDaily> list = backendTransService.getBackendTrans();
         if (list.isEmpty()) {

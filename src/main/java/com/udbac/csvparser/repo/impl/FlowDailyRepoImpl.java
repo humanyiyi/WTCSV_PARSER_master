@@ -25,7 +25,7 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     FlowDailyService flowDailyService;
 
     @Override
-    public void insertFlowMarket() {
+    public void insertFlowMarket() throws Exception{
         String tableName = "tb_amp_flow_marketing_daily_table";
         List<TbAmpFlowMarketingDaily> marketingDailyList = flowDailyService.getFlowMarketing();
         if (marketingDailyList.isEmpty()) {
@@ -42,7 +42,7 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
 
 
     @Override
-    public void insertFlowNature() {
+    public void insertFlowNature() throws Exception{
         String tableName = "tb_amp_flow_nature_daily_table";
         List<TbAmpFlowNatureDaily> natureDailyList = flowDailyService.getFlowNature();
         if (natureDailyList.isEmpty()) {
@@ -57,7 +57,7 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     }
 
     @Override
-    public void insertFlowTotalDaily() {
+    public void insertFlowTotalDaily() throws Exception{
         String tableName = "tb_amp_flow_total_daily_table";
         List<TbAmpFlowTotalDaily> totalDailyList = flowDailyService.getFlowTotal();
         if (totalDailyList.isEmpty()) {
