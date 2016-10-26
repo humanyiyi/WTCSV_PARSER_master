@@ -15,4 +15,11 @@ public class ParserProperties {
         return csvPath;
     }
 
+    @Value("${com.udbac.csvparser.addressees}")
+    private String addressees;
+    public String getAddressees() {
+        return addressees;
+    }
+
+
 }
