@@ -48,7 +48,10 @@ public class TbAmpFlowNatureDaily {
     public String getEntryPage() {
         return entryPage;
     }
-
+    /**
+     * 转义sql中的 '
+     * @param entryPage
+     */
     public void setEntryPage(String entryPage) {
         if (!StringUtils.isEmpty(entryPage)) {
             if (entryPage.contains("'")) {
@@ -62,7 +65,6 @@ public class TbAmpFlowNatureDaily {
     public String getUrl() {
         return url;
     }
-
     public void setUrl(String url) {
         if (!StringUtils.isEmpty(url)) {
             if (url.contains("'")) {
@@ -73,6 +75,7 @@ public class TbAmpFlowNatureDaily {
         this.url = url;
     }
 
+    @Override
     public String toString() {
         return "'" + createDate + "'" +
                 ", '" + classfy + '\'' +

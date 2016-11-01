@@ -8,6 +8,9 @@ import java.util.List;
 
 /**
  * Created by 43890 on 2016/10/16.
+ * 解析CSV文件数据  tb_amp_flow_marketing_daily
+                    tb_amp_flow_nature_daily
+                    tb_amp_flow_total_daily
  */
 public interface FlowDailyService {
 

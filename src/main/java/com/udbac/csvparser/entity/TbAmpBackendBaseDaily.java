@@ -16,21 +16,6 @@ public class TbAmpBackendBaseDaily {
     private String bounceVisit;
     private String viewTime;
 
-    public TbAmpBackendBaseDaily(String createDate, String mic, String visits,
-                                 String visitor, String pv, String click, String bounceVisit, String viewTime) {
-        this.createDate = createDate;
-        this.mic = mic;
-        this.visits = visits;
-        this.visitor = visitor;
-        this.pv = pv;
-        this.click = click;
-        this.bounceVisit = bounceVisit;
-        this.viewTime = viewTime;
-    }
-
-    public TbAmpBackendBaseDaily() {
-    }
-
     public String getCreateDate() {
         return createDate;
     }

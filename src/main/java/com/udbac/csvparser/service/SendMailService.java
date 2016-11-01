@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Created by root on 2016/10/25.
+ * 邮件告警 由于生产环境没有外网 暂未启用
  */
 @Service
 public class SendMailService {

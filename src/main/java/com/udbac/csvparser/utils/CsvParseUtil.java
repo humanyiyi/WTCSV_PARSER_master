@@ -39,8 +39,8 @@ public class CsvParseUtil {
             return null;
         } else {
             allRows = parser.parseAll(csvfile, encoding);
-            if (allRows.size() < 1000) {
-                logger.error("***CSV FILE ROWS SIZE < 10000, FILENAME：" + filename + "  PLEASE CHECK FILE ROWS SIZE***");
+            if (allRows.size() < 200) {
+                logger.error("***CSV FILE ROWS SIZE < 500, FILENAME：" + filename + "  PLEASE CHECK FILE ROWS SIZE***");
                 return null;
 //                } else if (!getTime(allRows).equals(timeUtil.getYesterday())) {
 //                    logger.error("***CSV FILE DATE IS NOT YESTERDAY" + filename + "PLEASE CHECK FILE DATE***");

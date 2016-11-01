@@ -25,11 +25,11 @@ public class BackendTransRepoImpl implements BackendTransRepo {
 
     @Override
     public void insertBackendTrans() throws Exception{
-        String tableName = "tb_amp_backend_trans_daily_table";
+        String tableName = "tb_amp_backend_trans_daily ";
         List<TbAmpBackendTransDaily> list = backendTransService.getBackendTrans();
         if (list.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
-            return;
+            throw new RuntimeException();
         }
         for (TbAmpBackendTransDaily tbAmpBackendTransDaily : list) {
             if (tbAmpBackendTransDaily.getMic().length() > 24) {

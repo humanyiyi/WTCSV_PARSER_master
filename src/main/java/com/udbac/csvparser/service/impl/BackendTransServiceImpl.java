@@ -22,7 +22,7 @@ public class BackendTransServiceImpl implements BackendTransService {
     @Override
     public List<TbAmpBackendTransDaily> getBackendTrans() throws Exception{
         List<TbAmpBackendTransDaily> tbAmpBackendTransDailyList=new ArrayList<TbAmpBackendTransDaily>();;
-        List<String[]> pageClickRows = csvParseUtil.parseCSV2Rows("营销活动(落地页元素点击)去掉nv.csv","UTF-8");
+        List<String[]> pageClickRows = csvParseUtil.parseCSV2Rows("营销活动(落地页元素点击)去掉nv.csv");
         List<String[]> serviceRows = csvParseUtil.parseCSV2Rows("营销活动_办业务转化.csv");
         List<String[]> phonBuyRows = csvParseUtil.parseCSV2Rows("营销活动_买手机转化.csv");
         List<String[]> setMealRows = csvParseUtil.parseCSV2Rows("营销活动_办套餐转化.csv");
@@ -36,7 +36,7 @@ public class BackendTransServiceImpl implements BackendTransService {
                 if (row1.length != 6 || null == row1[0]) {
                     continue;
                 } else {
-                    if (row1[2].equals("合计")) {
+                    if (row1[2].equals("Total")) {
                         tbAmpBackendTransDaily.setCreateDate(csvParseUtil.getTime(pageClickRows));
                         tbAmpBackendTransDaily.setMic(row1[1]);
                         tbAmpBackendTransDaily.setBehaviorVV(row1[5]);

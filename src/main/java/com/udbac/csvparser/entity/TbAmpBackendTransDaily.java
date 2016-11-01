@@ -68,6 +68,7 @@ public class TbAmpBackendTransDaily {
         this.partsVV = partsVV;
     }
 
+    @Override
     public String toString() {
         return "'" + createDate + "'" +
                 ", '" + mic + '\'' +

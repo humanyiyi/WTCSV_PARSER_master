@@ -24,11 +24,11 @@ public class BackendBaseRepoImpl implements BackendBaseRepo {
 
     @Override
     public void insertBackendBase() throws Exception{
-        String tableName = "tb_amp_backend_base_daily_table";
+        String tableName = "tb_amp_backend_base_daily ";
         List<TbAmpBackendBaseDaily> list = backendBaseService.getBaseDaily();
         if (list.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
-            return;
+            throw new RuntimeException();
         }
 
         for (TbAmpBackendBaseDaily tbAmpBackendBaseDaily : list) {

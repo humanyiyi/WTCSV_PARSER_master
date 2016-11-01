@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by 43890 on 2016/10/11.
+ * 读取配置文件
  */
 @Component
 public class ParserProperties {

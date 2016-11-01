@@ -32,6 +32,10 @@ public class TbAmpFlowMarketingDaily {
         return url;
     }
 
+    /**
+     * 转义sql中的 '
+     * @param url
+     */
     public void setUrl(String url) {
         if (!StringUtils.isEmpty(url)) {
             if (url.contains("'")) {
@@ -58,8 +62,8 @@ public class TbAmpFlowMarketingDaily {
         this.pv = pv;
     }
 
+    @Override
     public String toString() {
-
         return "'" + createDate + "'" +
                 ", '" + mic + '\'' +
                 ", '" + url + '\'' +

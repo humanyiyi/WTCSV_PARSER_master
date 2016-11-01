@@ -23,8 +23,13 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
     }
 
     @Override
-    public void run(String... strings) throws Exception {
-        application.insertAll();
+    public void run(String... strings){
+        try {
+            application.insertAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExitException();
+        }
     }
 
     @Override
@@ -33,18 +38,12 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
     }
 
     @Transactional
-    public void insertAll(){
-        try {
+    public void insertAll() throws Exception{
             backendBaseRepo.insertBackendBase();
             backendTransRepo.insertBackendTrans();
             flowDailyRepo.insertFlowMarket();
             flowDailyRepo.insertFlowNature();
             flowDailyRepo.insertFlowTotalDaily();
-        } catch (Exception e) {
-            sendMailService.sendFailedEmail();
-            throw new ExitException();
-        }
-
     }
 
     @Autowired
