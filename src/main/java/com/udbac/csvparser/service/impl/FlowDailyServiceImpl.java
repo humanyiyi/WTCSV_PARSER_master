@@ -37,7 +37,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
             if (row1.length != 6 || null == row1[0]) {
                 continue;
             }
-            if (row1[2].equals("合计")) {
+            if (row1[2].equals("Total")) {
                 continue;
             }
             tbAmpFlowMarketingDaily.setCreateDate(csvParseUtil.getTime(ampFlowMarketRows));
@@ -70,7 +70,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 if (row1.length != 10 || null == row1[0]) {
                     continue;
                 }
-                if (row1[4] != null && row1[4].equals("合计")) {
+                if (row1[4] != null && row1[4].equals("Total")) {
                     continue;
                 }
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
@@ -88,7 +88,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 if (row4.length != 10 || null == row4[0]) {
                     continue;
                 }
-                if (row4[4] != null && row4[4].equals("合计")) {
+                if (row4[4] != null && row4[4].equals("Total")) {
                     continue;
                 }
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
@@ -106,7 +106,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 if (row2.length != 10 || null == row2[0]) {
                     continue;
                 }
-                if (row2[4] != null && row2[4].equals("合计")) {
+                if (row2[4] != null && row2[4].equals("Total")) {
                     continue;
                 }
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
@@ -124,7 +124,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
                 if (row3.length != 10 || null == row3[0]) {
                     continue;
                 }
-                if (row3[4] != null && row3[4].equals("合计")) {
+                if (row3[4] != null && row3[4].equals("Total")) {
                     continue;
                 }
                 tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
