@@ -27,6 +27,7 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
         try {
             application.insertAll();
         } catch (Exception e) {
+//            sendMailService.sendFailedEmail();
             e.printStackTrace();
             throw new ExitException();
         }

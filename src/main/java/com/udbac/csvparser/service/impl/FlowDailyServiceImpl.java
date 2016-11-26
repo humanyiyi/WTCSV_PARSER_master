@@ -1,15 +1,15 @@
 package com.udbac.csvparser.service.impl;
 
-import com.udbac.csvparser.entity.TbAmpFlowMarketingDaily;
-import com.udbac.csvparser.entity.TbAmpFlowNatureDaily;
-import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
+import com.udbac.csvparser.entity.*;
 import com.udbac.csvparser.service.FlowDailyService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 43890 on 2016/10/16.
@@ -20,17 +20,12 @@ public class FlowDailyServiceImpl implements FlowDailyService {
     @Autowired
     CsvParseUtil csvParseUtil;
 
-    @Autowired
-    TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily;
-    @Autowired
-    TbAmpFlowNatureDaily tbAmpFlowNatureDaily;
-    @Autowired
-    TbAmpFlowTotalDaily tbAmpFlowTotalDaily;
-
     @Override
-    public List<TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception{
+    public Map<CustomerKey,TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception{
+        CustomerKey customerKey;
+        TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily;
         List<String[]> ampFlowMarketRows = csvParseUtil.parseCSV2Rows("营销流量allhits_WT.es-new.csv");
-        List<TbAmpFlowMarketingDaily> tbAmpFlowMarketingDailyList = new ArrayList<TbAmpFlowMarketingDaily>();
+        HashMap<CustomerKey,TbAmpFlowMarketingDaily> tbAmpFlowMarketingDailyMap = new HashMap<>();
 
         for (String[] row1 : ampFlowMarketRows) {
             tbAmpFlowMarketingDaily = new TbAmpFlowMarketingDaily();
@@ -43,156 +38,94 @@ public class FlowDailyServiceImpl implements FlowDailyService {
             tbAmpFlowMarketingDaily.setCreateDate(csvParseUtil.getTime(ampFlowMarketRows));
             tbAmpFlowMarketingDaily.setMic(row1[1]);
             tbAmpFlowMarketingDaily.setUrl(row1[2]);
+            customerKey = new CustomerKey(tbAmpFlowMarketingDaily.getMic(), tbAmpFlowMarketingDaily.getUrl(), null, null);
             tbAmpFlowMarketingDaily.setVisits(row1[3]);
             tbAmpFlowMarketingDaily.setPv(row1[5]);
 
-            tbAmpFlowMarketingDailyList.add(tbAmpFlowMarketingDaily);
+            tbAmpFlowMarketingDailyMap.put(customerKey,tbAmpFlowMarketingDaily);
 
         }
-        return tbAmpFlowMarketingDailyList;
+        return tbAmpFlowMarketingDailyMap;
     }
 
     @Override
-    public List<TbAmpFlowNatureDaily> getFlowNature() throws Exception{
+    public Map<CustomerKey,TbAmpFlowNatureDaily> getFlowNature() throws Exception{
         List<String[]> mcidPortalRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)门户pc.csv");
         List<String[]> mcidPortalTouchRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)门户mobile.csv");
         List<String[]> mcidShopRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)shop.csv");
         List<String[]> mcidTouchRows = csvParseUtil.parseCSV2Rows("访前网站_入站页(排除mcid)touch.csv");
 
-        List<TbAmpFlowNatureDaily> tbAmpFlowNatureDailyList = new ArrayList<TbAmpFlowNatureDaily>();
+        Map<CustomerKey, TbAmpFlowNatureDaily> tbAmpFlowNatureDailyMap = new HashMap<>();
+
         if (mcidPortalRows.isEmpty() && mcidPortalTouchRows.isEmpty()
                 && mcidShopRows.isEmpty() && mcidTouchRows.isEmpty()) {
             return null;
         } else {
-            for (String[] row1 : mcidPortalRows) {
-
-                tbAmpFlowNatureDaily = new TbAmpFlowNatureDaily();
-                if (row1.length != 10 || null == row1[0]) {
-                    continue;
-                }
-                if (row1[4] != null && row1[4].equals("Total")) {
-                    continue;
-                }
-                tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
-                tbAmpFlowNatureDaily.setClassfy("PORTAL_PC");
-                tbAmpFlowNatureDaily.setUrl(row1[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row1[5]);
-                tbAmpFlowNatureDaily.setVisits(row1[7]);
-                tbAmpFlowNatureDaily.setPv(row1[9]);
-                tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
-            }
-
-            for (String[] row4 : mcidPortalRows) {
-
-                tbAmpFlowNatureDaily = new TbAmpFlowNatureDaily();
-                if (row4.length != 10 || null == row4[0]) {
-                    continue;
-                }
-                if (row4[4] != null && row4[4].equals("Total")) {
-                    continue;
-                }
-                tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
-                tbAmpFlowNatureDaily.setClassfy("PORTAL_MOBILE");
-                tbAmpFlowNatureDaily.setUrl(row4[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row4[5]);
-                tbAmpFlowNatureDaily.setVisits(row4[7]);
-                tbAmpFlowNatureDaily.setPv(row4[9]);
-                tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
-            }
-
-            for (String[] row2 : mcidShopRows) {
-
-                tbAmpFlowNatureDaily = new TbAmpFlowNatureDaily();
-                if (row2.length != 10 || null == row2[0]) {
-                    continue;
-                }
-                if (row2[4] != null && row2[4].equals("Total")) {
-                    continue;
-                }
-                tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
-                tbAmpFlowNatureDaily.setClassfy("SHOP");
-                tbAmpFlowNatureDaily.setUrl(row2[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row2[5]);
-                tbAmpFlowNatureDaily.setVisits(row2[7]);
-                tbAmpFlowNatureDaily.setPv(row2[9]);
-                tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
-            }
-
-            for (String[] row3 : mcidTouchRows) {
-
-                tbAmpFlowNatureDaily = new TbAmpFlowNatureDaily();
-                if (row3.length != 10 || null == row3[0]) {
-                    continue;
-                }
-                if (row3[4] != null && row3[4].equals("Total")) {
-                    continue;
-                }
-                tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(mcidPortalRows));
-                tbAmpFlowNatureDaily.setClassfy("TOUCH");
-                tbAmpFlowNatureDaily.setUrl(row3[2]);
-                tbAmpFlowNatureDaily.setEntryPage(row3[5]);
-                tbAmpFlowNatureDaily.setVisits(row3[7]);
-                tbAmpFlowNatureDaily.setPv(row3[9]);
-
-                tbAmpFlowNatureDailyList.add(tbAmpFlowNatureDaily);
-            }
+            handleNature(mcidPortalRows, tbAmpFlowNatureDailyMap, "PORTAL_PC");
+            handleNature(mcidPortalTouchRows, tbAmpFlowNatureDailyMap, "PORTAL_MOBILE");
+            handleNature(mcidShopRows, tbAmpFlowNatureDailyMap, "SHOP");
+            handleNature(mcidTouchRows, tbAmpFlowNatureDailyMap, "TOUCH");
         }
-        return tbAmpFlowNatureDailyList;
+        return tbAmpFlowNatureDailyMap;
     }
 
+    private void handleNature(List<String[]> rows , Map<CustomerKey, TbAmpFlowNatureDaily> map ,String classfy) {
+        CustomerKey customerKey;
+        TbAmpFlowNatureDaily tbAmpFlowNatureDaily;
+        for (String[] row1 : rows) {
+            tbAmpFlowNatureDaily = new TbAmpFlowNatureDaily();
+            if (row1.length != 10 || null == row1[0]) {
+                continue;
+            }
+            if (row1[4] != null && row1[4].equals("Total")) {
+                continue;
+            }
+            tbAmpFlowNatureDaily.setCreateDate(csvParseUtil.getTime(rows));
+            tbAmpFlowNatureDaily.setClassfy(classfy);
+            tbAmpFlowNatureDaily.setUrl(row1[2]);
+            tbAmpFlowNatureDaily.setEntryPage(row1[5]);
+            customerKey = new CustomerKey(null, tbAmpFlowNatureDaily.getUrl(),
+                    tbAmpFlowNatureDaily.getEntryPage(), tbAmpFlowNatureDaily.getClassfy());
+            tbAmpFlowNatureDaily.setVisits(row1[7]);
+            tbAmpFlowNatureDaily.setPv(row1[9]);
+            map.put(customerKey,tbAmpFlowNatureDaily);
+        }
+    }
+
+
     @Override
-    public List<TbAmpFlowTotalDaily> getFlowTotal() throws Exception{
+    public Map<CustomerKey,TbAmpFlowTotalDaily> getFlowTotal() throws Exception{
         List<String[]> portalRows = csvParseUtil.parseCSV2Rows("门户_页.csv");
         List<String[]> shopRows = csvParseUtil.parseCSV2Rows("shop_页.csv");
         List<String[]> touchRows = csvParseUtil.parseCSV2Rows("touch_页.csv");
 
-        List<TbAmpFlowTotalDaily> tbAmpFlowTotalDailyList = new ArrayList<TbAmpFlowTotalDaily>();
+        Map<CustomerKey, TbAmpFlowTotalDaily> tbAmpFlowTotalDailyMap = new HashMap<>();
         if (portalRows.isEmpty() && shopRows.isEmpty() && touchRows.isEmpty()) {
             return null;
         } else {
-            for (String[] row1 : portalRows) {
-                tbAmpFlowTotalDaily = new TbAmpFlowTotalDaily();
-                if (row1.length != 8 || null == row1[0]) {
-                    continue;
-                }
-                tbAmpFlowTotalDaily.setCreateDate(csvParseUtil.getTime(portalRows));
-                tbAmpFlowTotalDaily.setClassfy("PORTAL");
-                tbAmpFlowTotalDaily.setUrl(row1[2]);
-                tbAmpFlowTotalDaily.setVisits(row1[5]);
-                tbAmpFlowTotalDaily.setPv(row1[6]);
-                tbAmpFlowTotalDaily.setViewTime(row1[7]);
+            handleTotal(portalRows, tbAmpFlowTotalDailyMap, "PORTAL");
+            handleTotal(shopRows, tbAmpFlowTotalDailyMap, "SHOP");
+            handleTotal(touchRows, tbAmpFlowTotalDailyMap, "TOUCH");
+        }
+        return tbAmpFlowTotalDailyMap;
+    }
 
-                tbAmpFlowTotalDailyList.add(tbAmpFlowTotalDaily);
+    private void handleTotal(List<String[]> rows , Map<CustomerKey, TbAmpFlowTotalDaily> map , String classfy) {
+        CustomerKey customerKey;
+        TbAmpFlowTotalDaily tbAmpFlowTotalDaily;
+        for (String[] row1 : rows) {
+            tbAmpFlowTotalDaily = new TbAmpFlowTotalDaily();
+            if (row1.length != 8 || null == row1[0]) {
+                continue;
             }
-            for (String[] row2 : shopRows) {
-
-                tbAmpFlowTotalDaily = new TbAmpFlowTotalDaily();
-                if (row2.length != 8 || null == row2[0]) {
-                    continue;
-                }
-                tbAmpFlowTotalDaily.setCreateDate(csvParseUtil.getTime(portalRows));
-                tbAmpFlowTotalDaily.setClassfy("SHOP");
-                tbAmpFlowTotalDaily.setUrl(row2[2]);
-                tbAmpFlowTotalDaily.setVisits(row2[5]);
-                tbAmpFlowTotalDaily.setPv(row2[6]);
-                tbAmpFlowTotalDaily.setViewTime(row2[7]);
-
-                tbAmpFlowTotalDailyList.add(tbAmpFlowTotalDaily);
-            }
-            for (String[] row3 : touchRows) {
-                tbAmpFlowTotalDaily = new TbAmpFlowTotalDaily();
-                if (row3.length != 8 || null == row3[0]) {
-                    continue;
-                }
-                tbAmpFlowTotalDaily.setCreateDate(csvParseUtil.getTime(portalRows));
-                tbAmpFlowTotalDaily.setClassfy("TOUCH");
-                tbAmpFlowTotalDaily.setUrl(row3[2]);
-                tbAmpFlowTotalDaily.setVisits(row3[5]);
-                tbAmpFlowTotalDaily.setPv(row3[6]);
-                tbAmpFlowTotalDaily.setViewTime(row3[7]);
-                tbAmpFlowTotalDailyList.add(tbAmpFlowTotalDaily);
-            }
-            return tbAmpFlowTotalDailyList;
+            tbAmpFlowTotalDaily.setCreateDate(csvParseUtil.getTime(rows));
+            tbAmpFlowTotalDaily.setClassfy(classfy);
+            tbAmpFlowTotalDaily.setUrl(row1[2]);
+            customerKey = new CustomerKey(null, tbAmpFlowTotalDaily.getUrl(), null, tbAmpFlowTotalDaily.getClassfy());
+            tbAmpFlowTotalDaily.setVisits(row1[5]);
+            tbAmpFlowTotalDaily.setPv(row1[6]);
+            tbAmpFlowTotalDaily.setViewTime(row1[7]);
+            map.put(customerKey,tbAmpFlowTotalDaily);
         }
     }
 }

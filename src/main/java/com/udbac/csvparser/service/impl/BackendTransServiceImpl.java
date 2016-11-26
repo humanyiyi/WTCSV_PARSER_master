@@ -1,13 +1,15 @@
 package com.udbac.csvparser.service.impl;
 
+import com.udbac.csvparser.entity.CustomerKey;
 import com.udbac.csvparser.entity.TbAmpBackendTransDaily;
 import com.udbac.csvparser.service.BackendTransService;
 import com.udbac.csvparser.utils.CsvParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 43890 on 2016/10/16.
@@ -16,12 +18,12 @@ import java.util.List;
 public class BackendTransServiceImpl implements BackendTransService {
     @Autowired
     CsvParseUtil csvParseUtil;
-    @Autowired
-    TbAmpBackendTransDaily tbAmpBackendTransDaily;
 
     @Override
-    public List<TbAmpBackendTransDaily> getBackendTrans() throws Exception{
-        List<TbAmpBackendTransDaily> tbAmpBackendTransDailyList=new ArrayList<TbAmpBackendTransDaily>();;
+    public Map<CustomerKey,TbAmpBackendTransDaily> getBackendTrans() throws Exception{
+        CustomerKey customerKey;
+        TbAmpBackendTransDaily tbAmpBackendTransDaily;
+        HashMap<CustomerKey,TbAmpBackendTransDaily> transMap = new HashMap<>();
         List<String[]> pageClickRows = csvParseUtil.parseCSV2Rows("营销活动(落地页元素点击)去掉nv.csv");
         List<String[]> serviceRows = csvParseUtil.parseCSV2Rows("营销活动_办业务转化.csv");
         List<String[]> phonBuyRows = csvParseUtil.parseCSV2Rows("营销活动_买手机转化.csv");
@@ -39,6 +41,7 @@ public class BackendTransServiceImpl implements BackendTransService {
                     if (row1[2].equals("Total")) {
                         tbAmpBackendTransDaily.setCreateDate(csvParseUtil.getTime(pageClickRows));
                         tbAmpBackendTransDaily.setMic(row1[1]);
+                        customerKey = new CustomerKey(tbAmpBackendTransDaily.getMic(), null, null, null);
                         tbAmpBackendTransDaily.setBehaviorVV(row1[5]);
                         for (String[] row2 : serviceRows) {
                             if (row2.length == 6 && row2[1].equals(tbAmpBackendTransDaily.getMic())) {
@@ -67,13 +70,11 @@ public class BackendTransServiceImpl implements BackendTransService {
                                     tbAmpBackendTransDaily.setPartsVV(row5[3]);
                             }
                         }
-
-                        tbAmpBackendTransDailyList.add(tbAmpBackendTransDaily);
+                        transMap.put(customerKey,tbAmpBackendTransDaily);
                     }
                 }
             }
-
         }
-        return tbAmpBackendTransDailyList;
+        return transMap;
     }
 }

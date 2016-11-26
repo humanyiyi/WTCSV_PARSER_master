@@ -1,5 +1,6 @@
 package com.udbac.csvparser.repo.impl;
 
+import com.udbac.csvparser.entity.CustomerKey;
 import com.udbac.csvparser.entity.TbAmpBackendTransDaily;
 import com.udbac.csvparser.repo.BackendTransRepo;
 import com.udbac.csvparser.service.BackendTransService;
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 43890 on 2016/10/17.
@@ -26,16 +30,20 @@ public class BackendTransRepoImpl implements BackendTransRepo {
     @Override
     public void insertBackendTrans() throws Exception{
         String tableName = "tb_amp_backend_trans_daily ";
-        List<TbAmpBackendTransDaily> list = backendTransService.getBackendTrans();
-        if (list.isEmpty()) {
+        Map<CustomerKey,TbAmpBackendTransDaily> map = backendTransService.getBackendTrans();
+        if (map.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
         }
-        for (TbAmpBackendTransDaily tbAmpBackendTransDaily : list) {
+
+        Iterator iter = map.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            TbAmpBackendTransDaily tbAmpBackendTransDaily = (TbAmpBackendTransDaily) entry.getValue();
             if (tbAmpBackendTransDaily.getMic().length() > 24) {
                 continue;
             }
-            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendTransDaily.toString() + ") on conflict do nothing";
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendTransDaily.toString() + ") ";
             jdbcTemplate.execute(sql);
         }
         logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");

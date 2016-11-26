@@ -1,5 +1,6 @@
 package com.udbac.csvparser.repo.impl;
 
+import com.udbac.csvparser.entity.CustomerKey;
 import com.udbac.csvparser.entity.TbAmpFlowMarketingDaily;
 import com.udbac.csvparser.entity.TbAmpFlowNatureDaily;
 import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 43890 on 2016/10/17.
@@ -27,15 +30,19 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     @Override
     public void insertFlowMarket() throws Exception{
         String tableName = "tb_amp_flow_marketing_daily ";
-        List<TbAmpFlowMarketingDaily> marketingDailyList = flowDailyService.getFlowMarketing();
-        if (marketingDailyList.isEmpty()) {
+        Map<CustomerKey,TbAmpFlowMarketingDaily> marketingMap = flowDailyService.getFlowMarketing();
+        if (marketingMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
         }
-        for (TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily : marketingDailyList) {
+
+        Iterator iter = marketingMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily = (TbAmpFlowMarketingDaily) entry.getValue();
             if (tbAmpFlowMarketingDaily.getMic().length() >24) {continue;}
-            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowMarketingDaily.toString() + ") on conflict do nothing";
-                jdbcTemplate.execute(sql);
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowMarketingDaily.toString() + ") ";
+            jdbcTemplate.execute(sql);
         }
         logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
     }
@@ -44,29 +51,36 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     @Override
     public void insertFlowNature() throws Exception{
         String tableName = "tb_amp_flow_nature_daily ";
-        List<TbAmpFlowNatureDaily> natureDailyList = flowDailyService.getFlowNature();
-        if (natureDailyList.isEmpty()) {
+        Map<CustomerKey,TbAmpFlowNatureDaily> natureMap= flowDailyService.getFlowNature();
+        if (natureMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
         }
-        for (TbAmpFlowNatureDaily tbAmpFlowNatureDaily : natureDailyList) {
-            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowNatureDaily.toString() + ") on conflict do nothing";
-                jdbcTemplate.execute(sql);
-            }
+
+        Iterator iter = natureMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            TbAmpFlowNatureDaily tbAmpFlowNatureDaily = (TbAmpFlowNatureDaily) entry.getValue();
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowNatureDaily.toString() + ") ";
+            jdbcTemplate.execute(sql);
+        }
         logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
     }
 
     @Override
     public void insertFlowTotalDaily() throws Exception{
         String tableName = "tb_amp_flow_total_daily ";
-        List<TbAmpFlowTotalDaily> totalDailyList = flowDailyService.getFlowTotal();
-        if (totalDailyList.isEmpty()) {
+        Map<CustomerKey,TbAmpFlowTotalDaily> totalMap = flowDailyService.getFlowTotal();
+        if (totalMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
         }
-        for (TbAmpFlowTotalDaily tbAmpFlowTotalDaily : totalDailyList) {
-            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowTotalDaily.toString() + ") on conflict do nothing";
-                jdbcTemplate.execute(sql);
+        Iterator iter = totalMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            TbAmpFlowTotalDaily tbAmpFlowTotalDaily = (TbAmpFlowTotalDaily) entry.getValue();
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowTotalDaily.toString() + ") ";
+            jdbcTemplate.execute(sql);
         }
         logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
     }

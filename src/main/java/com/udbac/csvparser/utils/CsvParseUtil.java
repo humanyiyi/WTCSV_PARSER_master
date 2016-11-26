@@ -32,7 +32,7 @@ public class CsvParseUtil {
         CsvParserSettings visitsSetting = new CsvParserSettings();
         visitsSetting.getFormat().setLineSeparator("\n");
         CsvParser parser = new CsvParser(visitsSetting);
-        String filePath = parserProperties.getCsvPath() + "\\" + filename;
+        String filePath = parserProperties.getCsvPath() + "/" + filename;
         File csvfile = new File(filePath);
         if (!csvfile.exists()) {
             logger.error("***CAN NOT FIND FILE：" + filename + "  PLEASE CHECK THE CSV FILE IS EXIST***");

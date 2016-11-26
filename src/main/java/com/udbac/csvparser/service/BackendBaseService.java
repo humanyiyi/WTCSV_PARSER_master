@@ -1,9 +1,9 @@
 package com.udbac.csvparser.service;
 
+import com.udbac.csvparser.entity.CustomerKey;
 import com.udbac.csvparser.entity.TbAmpBackendBaseDaily;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 43890 on 2016/10/11.
@@ -11,5 +11,5 @@ import java.util.List;
  */
 
 public interface BackendBaseService {
-    List<TbAmpBackendBaseDaily> getBaseDaily() throws Exception;
+    Map<CustomerKey,TbAmpBackendBaseDaily> getBaseDaily() throws Exception;
 }
