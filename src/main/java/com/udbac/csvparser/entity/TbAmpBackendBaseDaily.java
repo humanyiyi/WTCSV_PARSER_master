@@ -1,6 +1,7 @@
 package com.udbac.csvparser.entity;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by 43890 on 2016/9/19.
@@ -9,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class TbAmpBackendBaseDaily {
     private String createDate;
     private String mic;
-    private String visits;
-    private String visitor;
-    private String pv;
-    private String click;
-    private String bounceVisit;
+    private Integer visits;
+    private Integer visitor;
+    private Integer pv;
+    private Integer click;
+    private Integer bounceVisit;
     private String viewTime;
 
     public String getCreateDate() {
@@ -28,47 +29,57 @@ public class TbAmpBackendBaseDaily {
         return mic;
     }
 
+//    public void setMic(String mic) {
+//        this.mic = mic;
+//    }
+
     public void setMic(String mic) {
+        if (!StringUtils.isEmpty(mic)) {
+            if (mic.contains("'")) {
+                this.mic = mic.replace("'", "''");
+                return;
+            }
+        }
         this.mic = mic;
     }
 
-    public String getVisits() {
+    public Integer getVisits() {
         return visits;
     }
 
-    public void setVisits(String visits) {
+    public void setVisits(Integer visits) {
         this.visits = visits;
     }
 
-    public String getVisitor() {
+    public Integer getVisitor() {
         return visitor;
     }
 
-    public void setVisitor(String visitor) {
+    public void setVisitor(Integer visitor) {
         this.visitor = visitor;
     }
 
-    public String getPv() {
+    public Integer getPv() {
         return pv;
     }
 
-    public void setPv(String pv) {
+    public void setPv(Integer pv) {
         this.pv = pv;
     }
 
-    public String getClick() {
+    public Integer getClick() {
         return click;
     }
 
-    public void setClick(String click) {
+    public void setClick(Integer click) {
         this.click = click;
     }
 
-    public String getBounceVisit() {
+    public Integer getBounceVisit() {
         return bounceVisit;
     }
 
-    public void setBounceVisit(String bounceVisit) {
+    public void setBounceVisit(Integer bounceVisit) {
         this.bounceVisit = bounceVisit;
     }
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,9 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     FlowDailyService flowDailyService;
 
     @Override
-    public void insertFlowMarket() throws Exception{
+    public void insertFlowMarket() throws Exception {
         String tableName = "tb_amp_flow_marketing_daily ";
-        Map<CustomerKey,TbAmpFlowMarketingDaily> marketingMap = flowDailyService.getFlowMarketing();
+        Map<CustomerKey, TbAmpFlowMarketingDaily> marketingMap = flowDailyService.getFlowMarketing();
         if (marketingMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
@@ -40,7 +41,9 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily = (TbAmpFlowMarketingDaily) entry.getValue();
-            if (tbAmpFlowMarketingDaily.getMic().length() >24) {continue;}
+            if (tbAmpFlowMarketingDaily.getMic().length() > 50) {
+                continue;
+            }
             String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowMarketingDaily.toString() + ") ";
             jdbcTemplate.execute(sql);
         }
@@ -49,9 +52,9 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
 
 
     @Override
-    public void insertFlowNature() throws Exception{
+    public void insertFlowNature() throws Exception {
         String tableName = "tb_amp_flow_nature_daily ";
-        Map<CustomerKey,TbAmpFlowNatureDaily> natureMap= flowDailyService.getFlowNature();
+        Map<CustomerKey, TbAmpFlowNatureDaily> natureMap = flowDailyService.getFlowNature();
         if (natureMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
@@ -68,13 +71,18 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     }
 
     @Override
-    public void insertFlowTotalDaily() throws Exception{
+    public void insertFlowTotalDaily() throws Exception {
+
         String tableName = "tb_amp_flow_total_daily ";
-        Map<CustomerKey,TbAmpFlowTotalDaily> totalMap = flowDailyService.getFlowTotal();
+        Map<CustomerKey, TbAmpFlowTotalDaily> totalMap = null;
+
+        totalMap = flowDailyService.getFlowTotal();
+
         if (totalMap.isEmpty()) {
             logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
             throw new RuntimeException();
         }
+
         Iterator iter = totalMap.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();

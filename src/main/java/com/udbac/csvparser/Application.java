@@ -16,21 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by 43890 on 2016/10/17.
  */
 @SpringBootApplication
-public class Application implements CommandLineRunner,ExitCodeGenerator {
+public class Application implements CommandLineRunner, ExitCodeGenerator {
 
     public static void main(String[] args) {
         System.exit(SpringApplication.exit(SpringApplication.run(Application.class, args)));
     }
 
     @Override
-    public void run(String... strings){
+    public void run(String... strings) {
         try {
             application.insertAll();
         } catch (Exception e) {
-//            sendMailService.sendFailedEmail();
+            sendMailService.sendFailedEmail();
             e.printStackTrace();
             throw new ExitException();
-        }
+    }
     }
 
     @Override
@@ -39,12 +39,13 @@ public class Application implements CommandLineRunner,ExitCodeGenerator {
     }
 
     @Transactional
-    public void insertAll() throws Exception{
-            backendBaseRepo.insertBackendBase();
-            backendTransRepo.insertBackendTrans();
-            flowDailyRepo.insertFlowMarket();
-            flowDailyRepo.insertFlowNature();
-            flowDailyRepo.insertFlowTotalDaily();
+    public void insertAll() throws Exception {
+        backendBaseRepo.insertBackendBase();
+        backendTransRepo.insertBackendTrans();
+        flowDailyRepo.insertFlowMarket();
+        flowDailyRepo.insertFlowNature();
+        flowDailyRepo.insertFlowTotalDaily();
+
     }
 
     @Autowired

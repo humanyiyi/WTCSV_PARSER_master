@@ -9,8 +9,8 @@ public class TbAmpFlowMarketingDaily {
     private String createDate;
     private String mic;
     private String url;
-    private String visits;
-    private String pv;
+    private Integer visits;
+    private Integer pv;
 
     public String getCreateDate() {
         return createDate;
@@ -23,8 +23,16 @@ public class TbAmpFlowMarketingDaily {
     public String getMic() {
         return mic;
     }
-
+//    public void setMic(String mic) {
+//        this.mic = mic;
+//    }
     public void setMic(String mic) {
+        if (!StringUtils.isEmpty(mic)) {
+            if (mic.contains("'")) {
+                this.mic = mic.replace("'", "''");
+                return;
+            }
+        }
         this.mic = mic;
     }
 
@@ -34,6 +42,7 @@ public class TbAmpFlowMarketingDaily {
 
     /**
      * 转义sql中的 '
+     *
      * @param url
      */
     public void setUrl(String url) {
@@ -46,19 +55,19 @@ public class TbAmpFlowMarketingDaily {
         this.url = url;
     }
 
-    public String getVisits() {
+    public Integer getVisits() {
         return visits;
     }
 
-    public void setVisits(String visits) {
+    public void setVisits(Integer visits) {
         this.visits = visits;
     }
 
-    public String getPv() {
+    public Integer getPv() {
         return pv;
     }
 
-    public void setPv(String pv) {
+    public void setPv(Integer pv) {
         this.pv = pv;
     }
 

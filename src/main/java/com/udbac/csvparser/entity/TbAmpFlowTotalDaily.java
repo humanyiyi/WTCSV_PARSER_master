@@ -9,8 +9,8 @@ public class TbAmpFlowTotalDaily {
     private String createDate;
     private String classfy;
     private String url;
-    private String visits;
-    private String pv;
+    private Integer visits;
+    private Integer pv;
     private String viewTime;
 
     public String getCreateDate() {
@@ -48,19 +48,19 @@ public class TbAmpFlowTotalDaily {
         this.url = url;
     }
 
-    public String getVisits() {
+    public Integer getVisits() {
         return visits;
     }
 
-    public void setVisits(String visits) {
+    public void setVisits(Integer visits) {
         this.visits = visits;
     }
 
-    public String getPv() {
+    public Integer getPv() {
         return pv;
     }
 
-    public void setPv(String pv) {
+    public void setPv(Integer pv) {
         this.pv = pv;
     }
 

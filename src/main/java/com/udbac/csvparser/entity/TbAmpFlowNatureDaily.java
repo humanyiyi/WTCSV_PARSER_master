@@ -10,8 +10,8 @@ public class TbAmpFlowNatureDaily {
     private String classfy;
     private String url;
     private String entryPage;
-    private String visits;
-    private String pv;
+    private Integer visits;
+    private Integer pv;
 
     public String getClassfy() {
         return classfy;
@@ -21,19 +21,19 @@ public class TbAmpFlowNatureDaily {
         this.classfy = classfy;
     }
 
-    public String getVisits() {
+    public Integer getVisits() {
         return visits;
     }
 
-    public void setVisits(String visits) {
+    public void setVisits(Integer visits) {
         this.visits = visits;
     }
 
-    public String getPv() {
+    public Integer getPv() {
         return pv;
     }
 
-    public void setPv(String pv) {
+    public void setPv(Integer pv) {
         this.pv = pv;
     }
 

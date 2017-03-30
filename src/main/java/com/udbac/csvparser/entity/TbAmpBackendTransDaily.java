@@ -1,22 +1,34 @@
 package com.udbac.csvparser.entity;
 
+import org.springframework.jca.cci.core.InteractionCallback;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import sun.rmi.server.InactiveGroupException;
 
 @Component
 public class TbAmpBackendTransDaily {
     private String createDate;
     private String mic;
-    private String behaviorVV;
-    private String transactionVV;
-    private String phonBuyVV;
-    private String setMealVV;
-    private String partsVV;
+    private Integer behaviorVV;
+    private Integer transactionVV;
+    private Integer phonBuyVV;
+    private Integer setMealVV;
+    private Integer partsVV;
 
     public String getMic() {
         return mic;
     }
 
+//    public void setMic(String mic) {
+//        this.mic = mic;
+//    }
     public void setMic(String mic) {
+        if (!StringUtils.isEmpty(mic)) {
+            if (mic.contains("'")) {
+                this.mic = mic.replace("'", "''");
+                return;
+            }
+        }
         this.mic = mic;
     }
 
@@ -28,43 +40,43 @@ public class TbAmpBackendTransDaily {
         this.createDate = createDate;
     }
 
-    public String getBehaviorVV() {
+    public Integer getBehaviorVV() {
         return behaviorVV;
     }
 
-    public void setBehaviorVV(String behaviorVV) {
+    public void setBehaviorVV(Integer behaviorVV) {
         this.behaviorVV = behaviorVV;
     }
 
-    public String getTransactionVV() {
+    public Integer getTransactionVV() {
         return transactionVV;
     }
 
-    public void setTransactionVV(String transactionVV) {
+    public void setTransactionVV(Integer transactionVV) {
         this.transactionVV = transactionVV;
     }
 
-    public String getPhonBuyVV() {
+    public Integer getPhonBuyVV() {
         return phonBuyVV;
     }
 
-    public void setPhonBuyVV(String phonBuyVV) {
+    public void setPhonBuyVV(Integer phonBuyVV) {
         this.phonBuyVV = phonBuyVV;
     }
 
-    public String getSetMealVV() {
+    public Integer getSetMealVV() {
         return setMealVV;
     }
 
-    public void setSetMealVV(String setMealVV) {
+    public void setSetMealVV(Integer setMealVV) {
         this.setMealVV = setMealVV;
     }
 
-    public String getPartsVV() {
+    public Integer getPartsVV() {
         return partsVV;
     }
 
-    public void setPartsVV(String partsVV) {
+    public void setPartsVV(Integer partsVV) {
         this.partsVV = partsVV;
     }
 
