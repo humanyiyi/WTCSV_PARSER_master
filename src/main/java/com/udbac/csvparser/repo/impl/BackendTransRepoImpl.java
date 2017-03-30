@@ -40,7 +40,7 @@ public class BackendTransRepoImpl implements BackendTransRepo {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             TbAmpBackendTransDaily tbAmpBackendTransDaily = (TbAmpBackendTransDaily) entry.getValue();
-            if (tbAmpBackendTransDaily.getMic().length() > 50) {
+            if (tbAmpBackendTransDaily.getMic().length() > 100) {
                 continue;
             }
             String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendTransDaily.toString() + ") ";

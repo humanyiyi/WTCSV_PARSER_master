@@ -37,7 +37,7 @@ public class BackendBaseRepoImpl implements BackendBaseRepo {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             TbAmpBackendBaseDaily tbAmpBackendBaseDaily = (TbAmpBackendBaseDaily) entry.getValue();
-            if (tbAmpBackendBaseDaily.getMic().length() > 50) {
+            if (tbAmpBackendBaseDaily.getMic().length() > 100) {
                 continue;
             }
             String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpBackendBaseDaily.toString() + ")";

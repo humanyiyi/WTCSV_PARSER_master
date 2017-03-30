@@ -41,7 +41,7 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily = (TbAmpFlowMarketingDaily) entry.getValue();
-            if (tbAmpFlowMarketingDaily.getMic().length() > 50) {
+            if (tbAmpFlowMarketingDaily.getMic().length() > 100) {
                 continue;
             }
             String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowMarketingDaily.toString() + ") ";
