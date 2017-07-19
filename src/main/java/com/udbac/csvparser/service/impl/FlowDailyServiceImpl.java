@@ -3,12 +3,9 @@ package com.udbac.csvparser.service.impl;
 import com.udbac.csvparser.entity.*;
 import com.udbac.csvparser.service.FlowDailyService;
 import com.udbac.csvparser.utils.CsvParseUtil;
-import com.udbac.csvparser.utils.ExitException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jca.cci.core.InteractionCallback;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +20,37 @@ public class FlowDailyServiceImpl implements FlowDailyService {
     CsvParseUtil csvParseUtil;
 
     @Override
+    public Map<CustomerKey, TbAmpFlowMarketingPageDaily> getFlowMarketingPage() throws Exception {
+        CustomerKey customerKey;
+        TbAmpFlowMarketingPageDaily tbAmpFlowMarketingPageDaily;
+        List<String[]> ampFlowMarketPageRows = csvParseUtil.parseCSV2Rows("营销活动allhits_page.csv");
+        HashMap<CustomerKey, TbAmpFlowMarketingPageDaily> tbAmpFlowMarketingPageDailyMap = new HashMap<>();
+
+        for (String[] row1 : ampFlowMarketPageRows) {
+            tbAmpFlowMarketingPageDaily = new TbAmpFlowMarketingPageDaily();
+            if (row1.length != 8 || null == row1[0]) {
+                continue;
+            }
+            if (row1[2] != null &&row1[2].equals("Total")) {
+                continue;
+            }
+            try {
+                tbAmpFlowMarketingPageDaily.setCreateDate(csvParseUtil.getTime(ampFlowMarketPageRows));
+                tbAmpFlowMarketingPageDaily.setMic(row1[1]);
+                tbAmpFlowMarketingPageDaily.setUrl(row1[3]);
+                customerKey = new CustomerKey(tbAmpFlowMarketingPageDaily.getMic(), tbAmpFlowMarketingPageDaily.getUrl(), null, null);
+                tbAmpFlowMarketingPageDaily.setVisits(Integer.valueOf(row1[5]));
+                tbAmpFlowMarketingPageDaily.setPv(Integer.valueOf(row1[7]));
+
+                tbAmpFlowMarketingPageDailyMap.put(customerKey, tbAmpFlowMarketingPageDaily);
+            }catch(NumberFormatException e){
+//                e.printStackTrace();
+            }
+        }
+        return tbAmpFlowMarketingPageDailyMap;
+    }
+
+    @Override
     public Map<CustomerKey, TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception {
         CustomerKey customerKey;
         TbAmpFlowMarketingDaily tbAmpFlowMarketingDaily;
@@ -34,7 +62,7 @@ public class FlowDailyServiceImpl implements FlowDailyService {
             if (row1.length != 6 || null == row1[0]) {
                 continue;
             }
-            if (row1[2].equals("total")) {
+            if (row1[2].equals("Total")) {
                 continue;
             }try {
                 tbAmpFlowMarketingDaily.setCreateDate(csvParseUtil.getTime(ampFlowMarketRows));

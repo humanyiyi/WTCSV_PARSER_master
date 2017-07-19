@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 
@@ -52,7 +51,7 @@ public class CsvParseUtil {
 
     public String getTime(List<String[]> ampRows) {
         String date = null;
-        for (int i = 0; i <= 50; i++) {
+        for (int i = 0; i < 10; i++) {
             String[] row1 = ampRows.get(i);
             if (row1.length == 2) {
                 date = row1[0].substring(0, 10);

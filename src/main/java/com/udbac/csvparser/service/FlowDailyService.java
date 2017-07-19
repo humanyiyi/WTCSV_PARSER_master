@@ -1,9 +1,6 @@
 package com.udbac.csvparser.service;
 
-import com.udbac.csvparser.entity.CustomerKey;
-import com.udbac.csvparser.entity.TbAmpFlowMarketingDaily;
-import com.udbac.csvparser.entity.TbAmpFlowNatureDaily;
-import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
+import com.udbac.csvparser.entity.*;
 
 import java.util.Map;
 
@@ -14,6 +11,8 @@ import java.util.Map;
                     tb_amp_flow_total_daily
  */
 public interface FlowDailyService {
+
+    Map<CustomerKey,TbAmpFlowMarketingPageDaily> getFlowMarketingPage() throws Exception;
 
     Map<CustomerKey,TbAmpFlowMarketingDaily> getFlowMarketing() throws Exception;
 

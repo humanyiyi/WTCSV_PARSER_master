@@ -7,6 +7,9 @@ package com.udbac.csvparser.repo;
  *        tb_amp_flow_total_daily
  */
 public interface FlowDailyRepo {
+
+    void insertFlowMarketPage() throws Exception;
+
     void insertFlowMarket() throws Exception;
 
     void insertFlowNature() throws Exception;

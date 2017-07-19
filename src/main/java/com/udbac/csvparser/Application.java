@@ -42,6 +42,7 @@ public class Application implements CommandLineRunner, ExitCodeGenerator {
     public void insertAll() throws Exception {
         backendBaseRepo.insertBackendBase();
         backendTransRepo.insertBackendTrans();
+        flowDailyRepo.insertFlowMarketPage();
         flowDailyRepo.insertFlowMarket();
         flowDailyRepo.insertFlowNature();
         flowDailyRepo.insertFlowTotalDaily();

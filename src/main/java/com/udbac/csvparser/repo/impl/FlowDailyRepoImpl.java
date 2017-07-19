@@ -1,9 +1,6 @@
 package com.udbac.csvparser.repo.impl;
 
-import com.udbac.csvparser.entity.CustomerKey;
-import com.udbac.csvparser.entity.TbAmpFlowMarketingDaily;
-import com.udbac.csvparser.entity.TbAmpFlowNatureDaily;
-import com.udbac.csvparser.entity.TbAmpFlowTotalDaily;
+import com.udbac.csvparser.entity.*;
 import com.udbac.csvparser.repo.FlowDailyRepo;
 import com.udbac.csvparser.service.FlowDailyService;
 import org.slf4j.Logger;
@@ -12,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +22,28 @@ public class FlowDailyRepoImpl implements FlowDailyRepo {
     JdbcTemplate jdbcTemplate;
     @Autowired
     FlowDailyService flowDailyService;
+
+    @Override
+    public void insertFlowMarketPage() throws Exception {
+        String tableName = "tb_amp_flow_marketing_page_daily ";
+        Map<CustomerKey, TbAmpFlowMarketingPageDaily> marketingPageMap = flowDailyService.getFlowMarketingPage();
+        if (marketingPageMap.isEmpty()) {
+            logger.error("***INSERT INTO TABLE:*" + tableName + "*FAILED， CAUSE BY EMPTY SET FROM CSV FILE ***");
+            throw new RuntimeException();
+        }
+
+        Iterator iter = marketingPageMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            TbAmpFlowMarketingPageDaily tbAmpFlowMarketingPageDaily = (TbAmpFlowMarketingPageDaily) entry.getValue();
+            if (tbAmpFlowMarketingPageDaily.getMic().length() > 100) {
+                continue;
+            }
+            String sql = "INSERT INTO " + tableName + " VALUES(" + tbAmpFlowMarketingPageDaily.toString() + ") ";
+            jdbcTemplate.execute(sql);
+        }
+        logger.info("---INSERT INTO TABLE:-" + tableName + "-SUCCEED---");
+    }
 
     @Override
     public void insertFlowMarket() throws Exception {
